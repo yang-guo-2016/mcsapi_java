@@ -684,4 +684,34 @@ public class Client extends BaseClient {
 		return result;
     }
 
+	/**
+	 * 绑定 NAT 网关
+	 *
+	 * @param netGatewayId NAT 网关ID
+	 * @param instanceId 主机资源ID
+	 * @return bool
+	 * @throws Exception
+	 */
+    public JSONObject AssociateNatGateway(String netGatewayId, String instanceId) throws Exception {
+		JSONObject kwargs = new JSONObject();
+		kwargs.put("NatGatewayID", netGatewayId);
+		kwargs.put("InstanceId", instanceId);
+		JSONObject result = Request("AssociateNatGateway", kwargs);
+		return result;
+	}
+
+    /**
+     * 获取 NAT 网关列表
+     *
+     * @param limit 本次请求返回的数量
+     * @param offset 本次请求返回的偏移量
+     * @return
+     * @throws Exception
+     */
+	public JSONObject DescribeNatGateway(int limit, int offset) throws Exception {
+        JSONObject kwargs = new JSONObject();
+        parse_list_params(limit, offset, null, kwargs);
+        JSONObject result = Request("DescribeNatGateway", kwargs);
+        return result;
+    }
 }
