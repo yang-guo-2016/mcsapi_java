@@ -161,8 +161,8 @@ public class Client extends BaseClient {
 	/**
 	 * 创建虚拟机
 	 *
-	 * @param imageid String 系统模板ID
-	 * @param itype String 虚拟机类型ID
+	 * @param imageid String 系统模板ID 第一种创建方式的必须参数
+	 * @param itype String 虚拟机类型ID 第一种创建方式的必须参数
 	 * @param keypair String 虚拟机使用的SSH密钥ID
 	 * @param datadisk_gb int  指定创建虚拟机使用的额外数据盘，单位为GB
 	 * @param bandwidth_mbps int 指定创建虚拟机使用的额外带宽，单位为Mbps
@@ -170,13 +170,14 @@ public class Client extends BaseClient {
 	 * @param duration String 虚拟机租期, 缺省为'1M'，即一个月
 	 * @param name String 虚拟机名称(可选)
 	 * @param zone String 虚拟机所在可用域(可选)
+	 * @param groupid 指定创建的虚拟机使用的安全组Security group, 第一种创建方式的可选参数
 	 * @return 创建成功的虚拟机信息
 	 * @throws Exception
 	 */
 	public JSONObject CreateInstance(String imageid, String itype,
 			String keypair, int datadisk_gb, int bandwidth_mbps,
 			String snapshotid,
-			String duration, String name, String zone) throws Exception {
+			String duration, String name, String zone, String groupid) throws Exception {
 		JSONObject kwargs = new JSONObject();
 		if (snapshotid != null) {
 			kwargs.put("SnapshotId", snapshotid);
@@ -191,6 +192,10 @@ public class Client extends BaseClient {
 			}
 			if (bandwidth_mbps > 0) {
 				kwargs.put("ExtraExtBandwidth", bandwidth_mbps);
+			}
+
+			if (groupid != null) {
+				kwargs.put("GroupId", groupid);
 			}
 		}else {
 			throw new Exception("Not enough parameter to create instance");
