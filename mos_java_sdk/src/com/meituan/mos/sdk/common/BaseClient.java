@@ -190,6 +190,22 @@ public class BaseClient {
 		return result.getJSONObject(action + "Response");
 	}
 
+	protected JSONObject RequestWithRaw(String action, JSONObject kwargs)
+			throws Exception {
+		InputStream input = _request(request_url, action, kwargs);
+		String response = _inputStream2String(input);
+		JSONObject result;
+		if (debug) {
+			System.out.println("Response: " + response);
+		}
+		if (format == FORMAT_JSON) {
+			result = JSONML.toJSONObject(response);
+		}else {
+			result = XML.toJSONObject(response);
+		}
+		return result;
+	}
+
 	protected static void parse_list_params(int limit, int offset, Map<String, List<String>> filters, JSONObject kwargs) throws JSONException {
         if (limit > 0) {
         	kwargs.put("Limit", limit);

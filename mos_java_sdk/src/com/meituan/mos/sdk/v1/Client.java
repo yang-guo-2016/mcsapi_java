@@ -692,11 +692,12 @@ public class Client extends BaseClient {
 	 * @return bool
 	 * @throws Exception
 	 */
-    public JSONObject AssociateNatGateway(String netGatewayId, String instanceId) throws Exception {
+    public JSONObject AssociateNatGateway(String netGatewayId, String instanceId, String zone) throws Exception {
 		JSONObject kwargs = new JSONObject();
 		kwargs.put("NatGatewayID", netGatewayId);
 		kwargs.put("InstanceId", instanceId);
-		JSONObject result = Request("AssociateNatGateway", kwargs);
+		kwargs.put("AvailabilityZoneId", zone);
+		JSONObject result = RequestWithRaw("AssociateNatGateway", kwargs);
 		return result;
 	}
 
@@ -711,7 +712,7 @@ public class Client extends BaseClient {
 	public JSONObject DescribeNatGateway(int limit, int offset) throws Exception {
         JSONObject kwargs = new JSONObject();
         parse_list_params(limit, offset, null, kwargs);
-        JSONObject result = Request("DescribeNatGateway", kwargs);
+        JSONObject result = RequestWithRaw("DescribeNatGateway", kwargs);
         return result;
     }
 }
