@@ -1,27 +1,15 @@
 package com.meituan.mos.sdk.common;
 
+import org.json.*;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.TimeZone;
-
-import javax.net.ssl.HttpsURLConnection;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONML;
-import org.json.JSONObject;
-import org.json.XML;
+import java.util.*;
 
 
 public class BaseClient {
@@ -93,14 +81,14 @@ public class BaseClient {
 				}
 			}
 		}
-		if (format != null && (format == FORMAT_JSON || format == FORMAT_XML)) {
+		if (format != null && (Objects.equals(format, FORMAT_JSON) || Objects.equals(format, FORMAT_XML))) {
 			params.put("Format", format);
 		}
 		URL requrl = new URL(url);
 		String endpoint = requrl.getHost();
 		if (requrl.getPort() > 0
-				&& !(requrl.getProtocol() == "http" && requrl.getPort() == 80)
-				&& !(requrl.getProtocol() == "https" && requrl.getPort() == 443)) {
+				&& !(Objects.equals(requrl.getProtocol(), "http") && requrl.getPort() == 80)
+				&& !(Objects.equals(requrl.getProtocol(), "https") && requrl.getPort() == 443)) {
 			endpoint += ":" + requrl.getPort();
 		}
 		String request_uri = requrl.getPath();
@@ -182,23 +170,7 @@ public class BaseClient {
 		if (debug) {
 			System.out.println("Response: " + response);
 		}
-		if (format == FORMAT_JSON) {
-			result = JSONML.toJSONObject(response);
-		}else {
-			result = XML.toJSONObject(response);
-		}
-		return result.getJSONObject(action + "Response");
-	}
-
-	protected JSONObject RequestWithRaw(String action, JSONObject kwargs)
-			throws Exception {
-		InputStream input = _request(request_url, action, kwargs);
-		String response = _inputStream2String(input);
-		JSONObject result;
-		if (debug) {
-			System.out.println("Response: " + response);
-		}
-		if (format == FORMAT_JSON) {
+		if (Objects.equals(format, FORMAT_JSON)) {
 			result = JSONML.toJSONObject(response);
 		}else {
 			result = XML.toJSONObject(response);

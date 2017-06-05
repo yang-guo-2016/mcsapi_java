@@ -39,8 +39,7 @@ public class Client extends BaseClient {
 	public JSONObject DescribeInstanceTypes(int limit, int offset, Map<String, List<String>> filters) throws Exception {
         JSONObject kwargs = new JSONObject();
         parse_list_params(limit, offset, filters, kwargs);
-        JSONObject result = Request("DescribeInstanceTypes", kwargs);
-        return Utils.getJSONResult(result, "InstanceTypeSet");
+        return Request("DescribeInstanceTypes", kwargs);
 	}
 
 	/**
@@ -50,8 +49,7 @@ public class Client extends BaseClient {
 	 * @throws Exception
 	 */
 	public JSONObject DescribeTemplates() throws Exception {
-		JSONObject result = Request("DescribeTemplates", null);
-		return Utils.getJSONResult(result, "TemplateSet");
+		return Request("DescribeTemplates", null);
 	}
 
 	/**
@@ -85,8 +83,7 @@ public class Client extends BaseClient {
 			kwargs.put("InstanceName", Utils.stringArray2JSONArray(names));
 		}
 		parse_list_params(limit, offset, filters, kwargs);
-		JSONObject result = Request("DescribeInstances", kwargs);
-		return Utils.getJSONResult(result, "InstanceSet");
+		return Request("DescribeInstances", kwargs);
 	}
 
 	/**
@@ -103,8 +100,7 @@ public class Client extends BaseClient {
 		JSONObject kwargs = new JSONObject();
 		kwargs.put("InstanceId", iid);
 		parse_list_params(limit, offset, filters, kwargs);
-		JSONObject result = Request("DescribeInstanceVolumes", kwargs);
-		return Utils.getJSONResult(result, "InstanceVolumeSet");
+		return Request("DescribeInstanceVolumes", kwargs);
 	}
 
 	/**
@@ -121,8 +117,7 @@ public class Client extends BaseClient {
 		JSONObject kwargs = new JSONObject();
 		kwargs.put("InstanceId", iid);
 		parse_list_params(limit, offset, filters, kwargs);
-		JSONObject result = Request("DescribeInstanceNetworkInterfaces", kwargs);
-		return Utils.getJSONResult(result, "InstanceNetworkInterfaceSet");
+		return Request("DescribeInstanceNetworkInterfaces", kwargs);
 	}
 
 	/**
@@ -213,8 +208,7 @@ public class Client extends BaseClient {
 		if (zone != null) {
 			kwargs.put("AvailabilityZoneId", zone);
 		}
-		JSONObject result = Request("CreateInstance", kwargs);
-		return Utils.getJSONResult(result, "Instance");
+		return Request("CreateInstance", kwargs);
 	}
 
 	/**
@@ -227,8 +221,7 @@ public class Client extends BaseClient {
 	public JSONObject DescribeInstanceStatus(String iid) throws Exception {
 		JSONObject kwargs = new JSONObject();
 		kwargs.put("InstanceId", iid);
-		JSONObject result = Request("DescribeInstanceStatus", kwargs);
-		return Utils.getJSONResult(result, "InstanceStatus");
+		return Request("DescribeInstanceStatus", kwargs);
 	}
 
 	/**
@@ -359,8 +352,7 @@ public class Client extends BaseClient {
 	public JSONObject GetInstanceMetadata(String iid) throws Exception {
 		JSONObject kwargs = new JSONObject();
 		kwargs.put("InstanceId", iid);
-		JSONObject result = Request("GetInstanceMetadata", kwargs);
-		return Utils.getJSONResult(result, "InstanceMetadata");
+		return Request("GetInstanceMetadata", kwargs);
 	}
 
 	/**
@@ -396,8 +388,7 @@ public class Client extends BaseClient {
 	public JSONObject DescribeKeyPairs(int limit, int offset, Map<String, List<String>> filters) throws Exception {
 		JSONObject kwargs = new JSONObject();
 		parse_list_params(limit, offset, filters, kwargs);
-		JSONObject result = Request("DescribeKeyPairs", kwargs);
-		return Utils.getJSONResult(result, "KeyPairSet");
+		return Request("DescribeKeyPairs", kwargs);
 	}
 
 	/**
@@ -412,8 +403,7 @@ public class Client extends BaseClient {
 		JSONObject kwargs = new JSONObject();
 		kwargs.put("KeyName", name);
 		kwargs.put("PublicKeyMaterial", pubkey);
-		JSONObject result = Request("ImportKeyPair", kwargs);
-		return Utils.getJSONResult(result, "KeyPair");
+		return Request("ImportKeyPair", kwargs);
 	}
 
 	/**
@@ -483,8 +473,7 @@ public class Client extends BaseClient {
 			kwargs.put("InstanceId", Utils.stringArray2JSONArray(instanceIds));
 		}
 		parse_list_params(limit, offset, filters, kwargs);
-		JSONObject result = Request("DescribeSnapshots", kwargs);
-		return Utils.getJSONResult(result, "SnapshotSet");
+		return Request("DescribeSnapshots", kwargs);
 	}
 
     /**
@@ -540,8 +529,7 @@ public class Client extends BaseClient {
     public JSONObject DescribeAvailabilityZones(int limit, int offset) throws Exception {
     	JSONObject kwargs = new JSONObject();
     	parse_list_params(limit, offset, null, kwargs);
-		JSONObject result = Request("DescribeAvailabilityZones", kwargs);
-		return result.getJSONObject("AvailabilityZoneSet");
+		return Request("DescribeAvailabilityZones", kwargs);
     }
 
 
@@ -568,8 +556,7 @@ public class Client extends BaseClient {
     		kwargs.put("AvailabilityZoneId", availability_zone_id);
     	}
 
-		JSONObject result = Request("AllocateAddress", kwargs);
-		return result.getJSONObject("Address");
+        return Request("AllocateAddress", kwargs);
     }
 
     /**
@@ -588,7 +575,7 @@ public class Client extends BaseClient {
 		}
 		parse_list_params(limit, offset, filters, kwargs);
 		JSONObject result = Request("DescribeAddresses", kwargs);
-		return Utils.getJSONResult(result, "AddressSet");
+		return result;
     }
 
     /**
@@ -604,7 +591,7 @@ public class Client extends BaseClient {
     	kwargs.put("Name", name);
 
 		JSONObject result = Request("ConfigAddress", kwargs);
-		return result.getJSONObject("Address");
+		return result;
     }
 
     /**
@@ -697,7 +684,7 @@ public class Client extends BaseClient {
 		kwargs.put("NatGatewayID", netGatewayId);
 		kwargs.put("InstanceId", instanceId);
 		kwargs.put("AvailabilityZoneId", zone);
-		JSONObject result = RequestWithRaw("AssociateNatGateway", kwargs);
+		JSONObject result = Request("AssociateNatGateway", kwargs);
 		return result;
 	}
 
@@ -712,7 +699,7 @@ public class Client extends BaseClient {
 	public JSONObject DescribeNatGateway(int limit, int offset) throws Exception {
         JSONObject kwargs = new JSONObject();
         parse_list_params(limit, offset, null, kwargs);
-        JSONObject result = RequestWithRaw("DescribeNatGateway", kwargs);
+        JSONObject result = Request("DescribeNatGateway", kwargs);
         return result;
     }
 }
